@@ -1,8 +1,8 @@
-const formRef = document.querySelector(".feedback-form");
-const throttle = require("lodash.throttle");
+const formRef = document.querySelector('.feedback-form');
+const throttle = require('lodash.throttle');
 
-formRef.addEventListener("input", throttle(onTextareaInput, 500));
-formRef.addEventListener("submit", onFormSubmit);
+formRef.addEventListener('input', throttle(onTextareaInput, 500));
+formRef.addEventListener('submit', onFormSubmit);
 
 fillInTextarea();
 
@@ -10,26 +10,25 @@ const formData = {};
 
 function onTextareaInput(event) {
   formData[event.target.name] = event.target.value;
-  formData[event.target.name] = event.target.value;
-  localStorage.setItem("feedback-form-state", JSON.stringify(formData));
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }
 
 function onFormSubmit(event) {
   event.preventDefault();
   if (
-    event.currentTarget.elements.email.value === "" ||
-    event.currentTarget.elements.message.value === ""
+    event.currentTarget.elements.email.value === '' ||
+    event.currentTarget.elements.message.value === ''
   ) {
-    alert("Для відправки форми мають бути заповнені всі поля!!!");
+    alert('Для відправки форми мають бути заповнені всі поля!!!');
     return;
   }
   event.currentTarget.reset();
-  console.log(JSON.parse(localStorage.getItem("feedback-form-state")));
-  localStorage.clear();
+  console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
+  localStorage.removeItem('feedback-form-state');
 }
 
 function fillInTextarea() {
-  const saveData = localStorage.getItem("feedback-form-state");
+  const saveData = localStorage.getItem('feedback-form-state');
   try {
     const dataArr = JSON.parse(saveData);
     if (dataArr.email) {
