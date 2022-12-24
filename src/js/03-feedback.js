@@ -6,7 +6,10 @@ formRef.addEventListener('submit', onFormSubmit);
 
 fillInTextarea();
 
-const formData = {};
+const formData = {
+  email: '',
+  message: '',
+};
 
 function onTextareaInput(event) {
   formData[event.target.name] = event.target.value;
@@ -15,6 +18,9 @@ function onTextareaInput(event) {
 
 function onFormSubmit(event) {
   event.preventDefault();
+  formData.email = '';
+  formData.message = '';
+
   if (
     event.currentTarget.elements.email.value === '' ||
     event.currentTarget.elements.message.value === ''
@@ -22,15 +28,15 @@ function onFormSubmit(event) {
     alert('Для відправки форми мають бути заповнені всі поля!!!');
     return;
   }
+
   event.currentTarget.reset();
   console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
   localStorage.removeItem('feedback-form-state');
 }
 
 function fillInTextarea() {
-  const saveData = localStorage.getItem('feedback-form-state');
   try {
-    const dataArr = JSON.parse(saveData);
+    const dataArr = JSON.parse(localStorage.getItem('feedback-form-state'));
     if (dataArr.email) {
       formRef.elements.email.value = dataArr.email;
     }
